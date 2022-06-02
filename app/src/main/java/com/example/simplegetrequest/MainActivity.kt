@@ -3,16 +3,12 @@ package com.example.simplegetrequest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Button
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.simplegetrequest.databinding.ActivityMainBinding
 import org.json.JSONObject
-import java.time.temporal.TemporalAmount
 
 class MainActivity : AppCompatActivity() {
     private lateinit var queue: RequestQueue
@@ -27,7 +23,8 @@ class MainActivity : AppCompatActivity() {
             num = binding.etPokemonAmount.text.toString().toInt()
             getPokemonList(num)
         }
-        //getPokemonList(num)
+
+
     }
 
     fun getPokemonList(listAmount: Int){
@@ -35,6 +32,10 @@ class MainActivity : AppCompatActivity() {
 
         val jsonRequest = JsonObjectRequest(url, Response.Listener<JSONObject>{ response ->
             Log.i("JSONRESPONSE", response.getJSONArray("results").toString())
+
+
+
+            binding.list.adapter = MainAdapter(response.getJSONArray("results"))
         },
         Response.ErrorListener { error ->
             //error.msg
